@@ -1,0 +1,1 @@
+include ':app', ':deezer-sdk-0.10.20'
