@@ -28,6 +28,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AdapterD
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeAsUp());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getSupportActionBar().setTitle(getTitle());
     }
 
