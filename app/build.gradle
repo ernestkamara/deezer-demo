@@ -42,3 +42,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
 }
+
+task installRunDebug(type: Exec, dependsOn: 'installDebug') {
+    // linux
+    commandLine 'adb', 'shell', 'am', 'start', '-n', 'com.ernestkamara.deezersample/.activities.MainActivity'
+    // windows
+     //commandLine 'cmd', '/c', 'adb', 'shell', 'am', 'start', '-n', 'com.ernestkamara.deezersample/.activities.MainActivity'
+}
