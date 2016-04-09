@@ -15,6 +15,11 @@ Pre-requisites
 - Browse artist's albums
 - Browse album's tracks
 
+Artist search | Browse Artist Albums | Browse Album tracks
+--- | --- | ---
+![Artist](https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artists_search_list.png) | ![Almubs] (https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artist_detail_1.png) | ![Album tracks ](https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artist_album_tracks.png)
+
+
 
 License
 -------
