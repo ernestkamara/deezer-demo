@@ -20,6 +20,12 @@ Artist search | Browse Artist Albums | Browse Album tracks
 ![Artist](https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artists_search_list.png) | ![Almubs] (https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artist_detail_1.png) | ![Album tracks ](https://raw.githubusercontent.com/ernestkamara/deezer-demo/develop/images/artist_album_tracks.png)
 
 
+#Cloning and building (command-line)
+`$ git clone git@github.com:ernestkamara/deezer-demo.git`\
+`$ cd deezer-demo`\
+`$ ./gradlew installDebug` to build debug version of the app.\
+`$ ./gradlew installRunDebug` to build, install and run debug version of the app.\
+
 
 License
 -------
