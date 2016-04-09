@@ -79,6 +79,11 @@ public abstract class DataSource<T> {
     }
 
     /**
+     * Load data to the data set
+     */
+    public abstract void fetchData();
+
+    /**
      * Interface for listening to changes in the data set.
      */
     public interface Delegate {

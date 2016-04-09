@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class FilterableArtistDataSource extends DataSource<Artist> implements Filterable{
     private ArrayList<Artist> mArtists;
-
+    private String mQueryString;
     public FilterableArtistDataSource(Context context) {
         super(context);
         mArtists = new ArrayList<>();
@@ -31,8 +31,15 @@ public class FilterableArtistDataSource extends DataSource<Artist> implements Fi
         return mArtists.get(position);
     }
 
-    public void doSearch(String query) {
-        getFilter().filter(query);
+    @Override
+    public void fetchData() {
+        if (mQueryString != null) {
+            getFilter().filter(mQueryString);
+        }
+    }
+
+    public void setQueryString(String queryString) {
+        mQueryString = queryString;
     }
 
     @Override

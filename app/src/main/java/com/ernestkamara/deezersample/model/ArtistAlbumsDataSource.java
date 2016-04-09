@@ -41,11 +41,8 @@ public class ArtistAlbumsDataSource extends DataSource<Album> {
         return mAlbums.get(position);
     }
 
-    /**
-     * Load all Album associated to mArtist
-     *
-     */
-    public void fetchArtistAlbums() {
+    @Override
+    public void fetchData() {
         mApiRequestFactory.newArtistAlbumRequest(getArtist().getId(), new ApiRequestFactory.RequestCallback() {
             @Override
             public void onRequestSuccess(Object o) {

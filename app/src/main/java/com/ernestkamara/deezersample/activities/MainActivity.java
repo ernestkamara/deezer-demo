@@ -2,9 +2,7 @@ package com.ernestkamara.deezersample.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,34 +14,27 @@ import com.deezer.sdk.model.Artist;
 import com.ernestkamara.deezersample.R;
 
 import com.ernestkamara.deezersample.adapters.FilterableArtistAdapter;
-import com.ernestkamara.deezersample.adapters.listerners.AdapterDelegate;
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.ernestkamara.deezersample.model.FilterableArtistDataSource;
 
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterDelegate {
+public class MainActivity extends BaseActivity implements SearchView.OnQueryTextListener {
     @Bind(R.id.filterable_list)ListView mListView;
     @Bind(R.id.empty_state_view) RelativeLayout mContainerLayout;
 
-    private FilterableArtistAdapter artistAdapter;
-    private FilterableArtistDataSource dataSource;
+    private FilterableArtistAdapter mFilterableArtistAdapter;
+    private FilterableArtistDataSource mFilterableArtistDataSource;
     private MenuItem mSearchMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        dataSource = new FilterableArtistDataSource(this);
-        artistAdapter = new FilterableArtistAdapter(this, dataSource, this);
-        mListView.setAdapter(artistAdapter);
+        mFilterableArtistDataSource = getDataSourceFactory().newFilterableArtistDataSource();
+        mFilterableArtistAdapter = new FilterableArtistAdapter(this, mFilterableArtistDataSource, this);
+        mListView.setAdapter(mFilterableArtistAdapter);
     }
 
     @Override
@@ -87,15 +78,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             showEmptyView();
             return false;
         } else {
-            dataSource.doSearch(newText);
+            hideEmptyView();
+            mFilterableArtistDataSource.setQueryString(newText);
+            mFilterableArtistDataSource.fetchData();
             return true;
         }
-    }
-
-    public void onSearch(String query) {
-        dataSource.doSearch(query);
-        mListView.setVisibility(View.VISIBLE);
-        mContainerLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -131,5 +118,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void showEmptyView(){
         mListView.setVisibility(View.GONE);
         mContainerLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected boolean showHomeAsUp() {
+        return false;
     }
 }

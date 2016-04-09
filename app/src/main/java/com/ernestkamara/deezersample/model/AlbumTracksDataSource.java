@@ -32,25 +32,23 @@ public class AlbumTracksDataSource extends DataSource<Track>{
         return mTracks.get(position);
     }
 
-    public Album getAlbum() {
-        return mAlbum;
+    @Override
+    public void fetchData() {
+        mApiRequestFactory.newAlbumTracksRequest(mAlbum.getId(), new ApiRequestFactory.RequestCallback() {
+            @Override
+            public void onRequestSuccess(Object result) {
+                mTracks = (ArrayList<Track>) result;
+                notifyDataLoaded();
+            }
+
+            @Override
+            public void onRequestFailed(Exception exception) {
+                notifyError(exception.getMessage());
+            }
+        });
     }
 
-    /**
-     * Load all Tracks associated to mAlbum
-     */
-    public void fetchAlbumTracks() {
-     mApiRequestFactory.newAlbumTracksRequest(mAlbum.getId(), new ApiRequestFactory.RequestCallback() {
-         @Override
-         public void onRequestSuccess(Object result) {
-             mTracks = (ArrayList<Track>) result;
-             notifyDataLoaded();
-         }
-
-         @Override
-         public void onRequestFailed(Exception exception) {
-             notifyError(exception.getMessage());
-         }
-     });
+    public Album getAlbum() {
+        return mAlbum;
     }
 }

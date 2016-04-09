@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.deezer.sdk.network.connect.DeezerConnect;
+import com.ernestkamara.deezersample.model.DataSourceFactory;
 
 import butterknife.ButterKnife;
 
@@ -15,6 +16,8 @@ import butterknife.ButterKnife;
 public class DeezerApplication extends Application {
     private ApiRequestFactory mApiRequestFactory;
     private Handler mHandler;
+    private DataSourceFactory mDataSourceFactory;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,6 +26,7 @@ public class DeezerApplication extends Application {
                                                    .build();
         mApiRequestFactory = new ApiRequestFactory(deezerConnect);
         mHandler = new Handler(Looper.getMainLooper());
+        mDataSourceFactory = new DataSourceFactory(this);
         ButterKnife.setDebug(BuildConfig.DEBUG);
     }
 
@@ -32,5 +36,9 @@ public class DeezerApplication extends Application {
 
     public Handler getDefaultHandler() {
         return mHandler;
+    }
+
+    public DataSourceFactory getDataSourceFactory() {
+        return mDataSourceFactory;
     }
 }

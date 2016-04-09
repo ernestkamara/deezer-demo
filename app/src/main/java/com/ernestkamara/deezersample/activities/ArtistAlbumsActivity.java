@@ -2,10 +2,8 @@ package com.ernestkamara.deezersample.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,18 +12,16 @@ import com.bumptech.glide.Glide;
 import com.deezer.sdk.model.Album;
 import com.deezer.sdk.model.Artist;
 import com.ernestkamara.deezersample.R;
-
 import com.ernestkamara.deezersample.adapters.ArtistAlbumRecyclerAdapter;
-import com.ernestkamara.deezersample.adapters.listerners.AdapterDelegate;
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import com.ernestkamara.deezersample.model.ArtistAlbumsDataSource;
+
+import butterknife.Bind;
 
 /**
  * @author Ernest Saidu Kamara
  * @since 07/04/16.
  */
-public class ArtistAlbumsActivity extends AppCompatActivity implements AdapterDelegate {
+public class ArtistAlbumsActivity extends BaseActivity {
     public static final String EXTRA_ARTIST = "artist";
 
     @Bind(R.id.albums_recyclerview) RecyclerView mAlbumsRecyclerView;
@@ -38,10 +34,19 @@ public class ArtistAlbumsActivity extends AppCompatActivity implements AdapterDe
     private ArtistAlbumRecyclerAdapter mArtistAlbumRecyclerAdapter;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_artist_albums;
+    }
+
+    @Override
+    protected boolean showHomeAsUp() {
+        return true;
+    }
+
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_artist_albums);
-        ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
             mArtist = savedInstanceState.getParcelable(EXTRA_ARTIST);
@@ -51,16 +56,12 @@ public class ArtistAlbumsActivity extends AppCompatActivity implements AdapterDe
             mArtist = intent.getParcelableExtra(EXTRA_ARTIST);
         }
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(mArtist.getName());
-        getSupportActionBar().setSubtitle("Artist");
 
+        setTitle(mArtist.getName());
         Glide.with(this).load(mArtist.getBigImageUrl()).centerCrop().into(mArtistBackdrop);
 
-        mArtistAlbumsDataSource = new ArtistAlbumsDataSource(this, mArtist);
-        mArtistAlbumsDataSource.fetchArtistAlbums();
+        mArtistAlbumsDataSource = getDataSourceFactory().newArtistAlbumsDataSource(mArtist);
+        mArtistAlbumsDataSource.fetchData();
 
         mArtistAlbumRecyclerAdapter = new ArtistAlbumRecyclerAdapter(this, mArtistAlbumsDataSource, this);
 
