@@ -21,10 +21,13 @@ Artist search | Browse Artist Albums | Browse Album tracks
 
 
 #Cloning and building (command-line)
-`$ git clone git@github.com:ernestkamara/deezer-demo.git`\
-`$ cd deezer-demo`\
-`$ ./gradlew installDebug` to build debug version of the app.\
-`$ ./gradlew installRunDebug` to build, install and run debug version of the app.\
+`$ git clone git@github.com:ernestkamara/deezer-demo.git`
+
+`$ cd deezer-demo`
+
+`$ ./gradlew installDebug` to build debug version of the app.
+
+`$ ./gradlew installRunDebug` to build, install and run debug version of the app.
 
 
 License
